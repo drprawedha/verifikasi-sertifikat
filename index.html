@@ -6,29 +6,29 @@
   <title>Verifikasi Sertifikat – PLS x FOSTI</title>
   <link rel="stylesheet" href="style.css" />
   <script>
-document.addEventListener("DOMContentLoaded", function () {
-  const params = new URLSearchParams(window.location.search);
-  // const bg = params.get("bg");
-  const bg = "https://picsum.photos/1600/900?random=" + Date.now();
-  if (!bg) return;
+    document.addEventListener("DOMContentLoaded", function () {
+      const params = new URLSearchParams(window.location.search);
+      // const bg = params.get("bg");
+      const bg = "https://picsum.photos/1600/900?random=" + Date.now();
+      if (!bg) return;
 
-  const body = document.body;
-  body.style.minHeight = "100vh";
-  body.style.margin = "0";
+      const body = document.body;
+      body.style.minHeight = "100vh";
+      body.style.margin = "0";
 
-  if (bg.startsWith("http") || bg.endsWith(".jpg") || bg.endsWith(".png")) {
-    // Set sebagai background image
-    body.style.backgroundImage = `url('${bg}')`;
-    body.style.backgroundSize = "cover";
-    body.style.backgroundRepeat = "no-repeat";
-    body.style.backgroundPosition = "center";
-  } else {
-    // Set sebagai warna
-    body.style.backgroundColor = bg;
-    body.style.backgroundImage = "none";
-  }
-});
-</script>
+      if (bg.startsWith("http") || bg.endsWith(".jpg") || bg.endsWith(".png")) {
+        // Set sebagai background image
+        body.style.backgroundImage = `url('${bg}')`;
+        body.style.backgroundSize = "cover";
+        body.style.backgroundRepeat = "no-repeat";
+        body.style.backgroundPosition = "center";
+      } else {
+        // Set sebagai warna
+        body.style.backgroundColor = bg;
+        body.style.backgroundImage = "none";
+      }
+    });
+    </script>
 
 </head>
 <body>
@@ -38,6 +38,11 @@ document.addEventListener("DOMContentLoaded", function () {
     <input type="text" id="certificateInput" placeholder="Masukkan nomor sertifikat"/>
     <button onclick="verify()">Cek Sertifikat</button>
     <div id="result"></div>
+    <select id="languageSwitcher">
+      <option value="id">Bahasa Indonesia</option>
+      <option value="en">English</option>
+      <option value="zh">繁體中文 (Taiwanese)</option>
+    </select>
   </div>
   <script src="script.js"></script>
   
