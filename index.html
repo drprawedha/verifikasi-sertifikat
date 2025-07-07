@@ -72,7 +72,11 @@ function applyTranslation(lang) {
   elements.forEach(el => {
     const key = el.getAttribute("data-i18n");
     if (translations[lang] && translations[lang][key]) {
-      el.innerText = translations[lang][key];
+      if (el.tagName === "INPUT" && el.hasAttribute("placeholder")) {
+        el.placeholder = translations[lang][key]; // ganti placeholder
+      } else {
+        el.innerText = translations[lang][key]; // ganti teks biasa
+      }
     }
   });
 }
