@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Verifikasi Sertifikat</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/i18next@23.8.1/i18next.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <style>
+    body { font-family: sans-serif; padding: 2rem; background: #f9f9f9; }
+    #lang-select { margin-bottom: 1rem; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { border: 1px solid #ddd; padding: 8px; }
+    th { background: #eee; }
+    #qrcode { margin-top: 1rem; }
+  </style>
+</head>
+<body>
+
+  <h1 data-i18n="title">Verifikasi Sertifikat</h1>
+
+  <select id="lang-select">
+    <option value="id">🇮🇩 Indonesia</option>
+    <option value="en">🇺🇸 English</option>
+    <option value="zh">🇹🇼 中文</option>
+  </select>
+
+  <label for="searchInput" data-i18n="label.search">Masukkan Nomor Sertifikat:</label>
+  <input type="text" id="searchInput" placeholder="Contoh: PLS-2025-001" />
+  <button onclick="searchCert()" data-i18n="button.verify">Verifikasi</button>
+
+  <div id="result" style="margin-top: 1rem;"></div>
+  <div id="qrcode"></div>
+
+  <script>
+    const SHEET_ID = "1abcDEF1234567"; // Ganti dengan ID Spreadsheet
+    const SHEET_NAME = "Sheet1";
+    const SHEET_URL = `https://opensheet.elk.sh/${SHEET_ID}/${SHEET_NAME}`;
+    let dataSheet = [];
+
+    fetch(SHEET_URL)
+      .then(res => res.json())
+      .then(data => {
+        dataSheet = data;
+      });
+
+    function searchCert() {
+      const input = document.getElementById("searchInput").value.trim();
+      const resultDiv = document.getElementById("result");
+      const qrDiv = document.getElementById("qrcode");
+      resultDiv.innerHTML = "";
+      qrDiv.innerHTML = "";
+
+      const found = dataSheet.find(row => row["Nomor Sertifikat"] === input);
+
+      if (found) {
+        resultDiv.innerHTML = `
+          <table>
+            <tr><th>${i18next.t("field.name")}</th><td>${found["Nama Lengkap"]}</td></tr>
+            <tr><th>${i18next.t("field.email")}</th><td>${found["Email"]}</td></tr>
+            <tr><th>${i18next.t("field.org")}</th><td>${found["Institusi"]}</td></tr>
+            <tr><th>${i18next.t("field.certnum")}</th><td>${found["Nomor Sertifikat"]}</td></tr>
+          </table>
+        `;
+        QRCode.toCanvas(document.getElementById("qrcode"), found["QR URL"], function (error) {
+          if (error) console.error(error);
+        });
+      } else {
+        resultDiv.innerHTML = `<p data-i18n="notfound">Sertifikat tidak ditemukan.</p>`;
+      }
+    }
+
+    i18next.init({
+      lng: 'id',
+      resources: {
+        id: {
+          translation: {
+            title: "Verifikasi Sertifikat",
+            label: {
+              search: "Masukkan Nomor Sertifikat:"
+            },
+            button: {
+              verify: "Verifikasi"
+            },
+            notfound: "Sertifikat tidak ditemukan.",
+            field: {
+              name: "Nama Lengkap",
+              email: "Email",
+              org: "Institusi",
+              certnum: "Nomor Sertifikat"
+            }
+          }
+        },
+        en: {
+          translation: {
+            title: "Certificate Verification",
+            label: {
+              search: "Enter Certificate Number:"
+            },
+            button: {
+              verify: "Verify"
+            },
+            notfound: "Certificate not found.",
+            field: {
+              name: "Full Name",
+              email: "Email",
+              org: "Institution",
+              certnum: "Certificate Number"
+            }
+          }
+        },
+        zh: {
+          translation: {
+            title: "證書驗證",
+            label: {
+              search: "輸入證書編號："
+            },
+            button: {
+              verify: "驗證"
+            },
+            notfound: "找不到證書。",
+            field: {
+              name: "姓名",
+              email: "電子郵件",
+              org: "單位",
+              certnum: "證書編號"
+            }
+          }
+        }
+      }
+    }, function(err, t) {
+      updateContent();
+    });
+
+    function updateContent() {
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        el.innerHTML = i18next.t(key);
+      });
+    }
+
+    document.getElementById("lang-select").addEventListener("change", function(e) {
+      i18next.changeLanguage(e.target.value, updateContent);
+    });
+  </script>
+
+</body>
+</html>
