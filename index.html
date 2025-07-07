@@ -33,10 +33,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>🔍 Verifikasi Sertifikat</h1>
-    <p>Masukkan nomor sertifikat kamu (contoh: PLS/FOSTI/CG-2025/001):</p>
+    <h1 data-i18n="title">🔍 Verifikasi Sertifikat</h1>
+    <p data-i18n="instruction" >Masukkan nomor sertifikat kamu (contoh: PLS/FOSTI/CG-2025/001):</p>
     <input type="text" id="certificateInput" placeholder="Masukkan nomor sertifikat"/>
-    <button onclick="verify()">Cek Sertifikat</button>
+    <button data-i18n="verify" onclick="verify()">Cek Sertifikat</button>
     <div id="result"></div>
     <select id="languageSwitcher">
       <option value="id">Bahasa Indonesia</option>
@@ -45,6 +45,46 @@
     </select>
   </div>
   <script src="script.js"></script>
+  <script>
+const translations = {
+  id: {
+    title: "Verifikasi Sertifikat",
+    instruction: "Silakan masukkan kode sertifikat Anda.",
+    verify: "Verifikasi"
+  },
+  en: {
+    title: "Certificate Verification",
+    instruction: "Please enter your certificate code.",
+    verify: "Verify"
+  },
+  zh: {
+    title: "證書驗證",
+    instruction: "請輸入您的證書代碼。",
+    verify: "驗證"
+  }
+};
+
+function applyTranslation(lang) {
+  const elements = document.querySelectorAll("[data-i18n]");
+  elements.forEach(el => {
+    const key = el.getAttribute("data-i18n");
+    if (translations[lang] && translations[lang][key]) {
+      el.innerText = translations[lang][key];
+    }
+  });
+}
+
+// Event listener untuk dropdown
+document.addEventListener("DOMContentLoaded", function () {
+  const langSwitcher = document.getElementById("languageSwitcher");
+  applyTranslation(langSwitcher.value); // default load
+
+  langSwitcher.addEventListener("change", function () {
+    applyTranslation(this.value);
+  });
+});
+</script>
+
   
 </body>
 </html>
