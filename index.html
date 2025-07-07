@@ -6,19 +6,26 @@
   <title>Verifikasi Sertifikat – PLS x FOSTI</title>
   <link rel="stylesheet" href="style.css" />
   <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
   const params = new URLSearchParams(window.location.search);
   const bg = params.get("bg");
 
   if (!bg) return;
 
-  if (bg.startsWith("http")) {
-    document.body.style.backgroundImage = `url(${bg})`;
-    document.body.style.backgroundSize = "cover";
-    document.body.style.backgroundRepeat = "no-repeat";
-    document.body.style.backgroundPosition = "center";
+  const body = document.body;
+  body.style.minHeight = "100vh";
+  body.style.margin = "0";
+
+  if (bg.startsWith("http") || bg.endsWith(".jpg") || bg.endsWith(".png")) {
+    // Set sebagai background image
+    body.style.backgroundImage = `url('${bg}')`;
+    body.style.backgroundSize = "cover";
+    body.style.backgroundRepeat = "no-repeat";
+    body.style.backgroundPosition = "center";
   } else {
-    document.body.style.background = bg; // Asumsikan ini warna (contoh: red, #000, rgba(0,0,0,0.5))
+    // Set sebagai warna
+    body.style.backgroundColor = bg;
+    body.style.backgroundImage = "none";
   }
 });
 </script>
