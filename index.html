@@ -34,8 +34,8 @@
 <body>
   <div class="container">
     <h1 data-i18n="title">🔍 Verifikasi Sertifikat</h1>
-    <p data-i18n="instruction" >Masukkan nomor sertifikat kamu (contoh: PLS/FOSTI/CG-2025/001):</p>
-    <input type="text" id="certificateInput" placeholder="Masukkan nomor sertifikat"/>
+    <p data-i18n="instruction" >Masukkan nomor sertifikat kamu :</p>
+    <input ata-i18n="instruction-pl" type="text" id="certificateInput" placeholder="(contoh: PLS/FOSTI/CG-2025/001)"/>
     <button data-i18n="verify" onclick="verify()">Cek Sertifikat</button>
     <div id="result"></div>
     <select id="languageSwitcher">
@@ -50,16 +50,19 @@ const translations = {
   id: {
     title: "Verifikasi Sertifikat",
     instruction: "Silakan masukkan kode sertifikat Anda. (contoh: PLS/FOSTI/CG-2025/001)",
+    instruction_pl: "(contoh: PLS/FOSTI/CG-2025/001)",
     verify: "Verifikasi"
   },
   en: {
     title: "Certificate Verification",
     instruction: "Please enter your certificate code.(sample: PLS/FOSTI/CG-2025/001)",
+    instruction_pl: "(sample: PLS/FOSTI/CG-2025/001)",
     verify: "Verify"
   },
   zh: {
     title: "證書驗證",
     instruction: "請輸入您的證書代碼。（示例：PLS/FOSTI/CG-2025/001）",
+    instruction_pl: "(示例：PLS/FOSTI/CG-2025/001)",
     verify: "驗證"
   }
 };
