@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Verifikasi Sertifikat – PLS x FOSTI</title>
   <link rel="stylesheet" href="style.css" />
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const bg = params.get("bg");
+
+  if (!bg) return;
+
+  if (bg.startsWith("http")) {
+    document.body.style.backgroundImage = `url(${bg})`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundRepeat = "no-repeat";
+    document.body.style.backgroundPosition = "center";
+  } else {
+    document.body.style.background = bg; // Asumsikan ini warna (contoh: red, #000, rgba(0,0,0,0.5))
+  }
+});
+</script>
+
 </head>
 <body>
   <div class="container">
@@ -15,26 +33,6 @@
     <div id="result"></div>
   </div>
   <script src="script.js"></script>
-  <script>
-// Ganti sesuai kebutuhan Anda:
-const backgroundSetting = {
-  type: "image", // "image" atau "color"
-  value: "https://source.unsplash.com/1600x900/?technology,certificate", // URL gambar atau kode warna
-};
-
-// Terapkan background ke body
-document.addEventListener("DOMContentLoaded", () => {
-  const body = document.body;
-
-  if (backgroundSetting.type === "color") {
-    body.style.background = backgroundSetting.value;
-  } else if (backgroundSetting.type === "image") {
-    body.style.backgroundImage = `url(${backgroundSetting.value})`;
-    body.style.backgroundSize = "cover";
-    body.style.backgroundRepeat = "no-repeat";
-    body.style.backgroundPosition = "center";
-  }
-});
-</script>
+  
 </body>
 </html>
